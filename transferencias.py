@@ -1,23 +1,31 @@
 from data import clientes, contactos
-from utils import input_numero
+from utils import input_numero, limpiar_terminal
+from rich.console import Console
+from rich.prompt import Prompt
+from rich.panel import Panel
+
+console = Console()
 
 def transferir():
-    origen_cuenta = input("Tu número de cuenta: ")
+    limpiar_terminal()
+    console.print(Panel("[bold cyan]Transferencia de Dinero[/bold cyan]"))
+    
+    origen_cuenta = Prompt.ask("Tu número de cuenta")
     cliente = next((c for c in clientes if c["cuenta"] == origen_cuenta), None)
     if not cliente:
-        print("Cuenta no encontrada.")
+        console.print("[red]Cuenta no encontrada.[/red]")
         return
 
-    destino_cuenta = input("Cuenta destino (debe estar en tus contactos): ")
+    destino_cuenta = Prompt.ask("Cuenta destino (debe estar en tus contactos)")
     if not any(c["cuenta"] == destino_cuenta for c in contactos):
-        print("No puedes transferir a esa cuenta.")
+        console.print("[red]No puedes transferir a esa cuenta.[/red]")
         return
 
     monto = input_numero("Monto a transferir: ", 1)
     disponible = cliente["saldo"] + (cliente["linea_credito"] - cliente["credito_usado"])
 
     if monto > disponible:
-        print("Saldo insuficiente.")
+        console.print("[red]Saldo insuficiente.[/red]")
         return
 
     if monto <= cliente["saldo"]:
@@ -29,4 +37,4 @@ def transferir():
 
     destino = next(c for c in clientes if c["cuenta"] == destino_cuenta)
     destino["saldo"] += monto
-    print("Transferencia exitosa.")
+    console.print(f"[green]Transferencia exitosa de ${monto:.2f}[/green]")

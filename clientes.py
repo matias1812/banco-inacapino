@@ -1,12 +1,22 @@
 from data import clientes
-from utils import validar_run, run_a_cuenta, input_numero
+from utils import validar_run, run_a_cuenta, input_numero, limpiar_terminal
+from rich.console import Console
+from rich.table import Table
+
+console = Console()
 
 def registrar_cliente():
+    limpiar_terminal()
     nombre = input("Nombre: ")
     apellido = input("Apellido: ")
     run = input("RUN (XX.XXX.XXX-X): ")
+
     if not validar_run(run):
-        print("RUN inválido.")
+        console.print("[red]RUN inválido.[/red]")
+        return
+
+    if any(c["run"] == run for c in clientes):
+        console.print("[yellow]Este cliente ya está registrado.[/yellow]")
         return
 
     cuenta = run_a_cuenta(run)
@@ -34,8 +44,28 @@ def registrar_cliente():
     }
 
     clientes.append(cliente)
-    print("Cliente registrado exitosamente.")
+    console.print("[green]Cliente registrado exitosamente.[/green]")
 
 def listar_clientes():
-    for cliente in clientes:
-        print(cliente)
+    limpiar_terminal()
+    if not clientes:
+        console.print("[bold red]No hay clientes registrados.[/bold red]")
+        return
+
+    table = Table(title="Listado de Clientes")
+    table.add_column("Nombre", style="cyan")
+    table.add_column("Apellido", style="cyan")
+    table.add_column("RUN", style="magenta")
+    table.add_column("Cuenta", style="green")
+    table.add_column("Saldo", justify="right")
+    table.add_column("Línea Crédito", justify="right")
+    table.add_column("Crédito Usado", justify="right")
+    table.add_column("Tarjeta Crédito", justify="right")
+
+    for c in clientes:
+        table.add_row(
+            c["nombre"], c["apellido"], c["run"], c["cuenta"],
+            f"${c['saldo']}", f"${c['linea_credito']}", f"${c['credito_usado']}", f"${c['tarjeta_credito']}"
+        )
+
+    console.print(table)

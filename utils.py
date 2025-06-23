@@ -1,4 +1,5 @@
 import re
+import os
 
 def validar_run(run):
     return bool(re.match(r'^\d{1,2}\.\d{3}\.\d{3}-[\dkK]$', run))
@@ -15,3 +16,6 @@ def input_numero(mensaje, minimo=0):
             return valor
         except ValueError:
             print(f"Ingrese un número válido mayor o igual a {minimo}.")
+
+def limpiar_terminal():
+    os.system('cls' if os.name == 'nt' else 'clear')
