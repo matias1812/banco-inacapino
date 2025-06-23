@@ -49,7 +49,7 @@ El **Sistema Bancario INACAPINO** es una aplicación de consola desarrollada en 
 
 ### 🔄 Flujo de Datos
 
-```mermaid
+\`\`\`mermaid
 graph TD
     A[main.py] --> B[Menú Principal]
     B --> C[Gestión Clientes]
