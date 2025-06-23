@@ -7,7 +7,7 @@
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Status](https://img.shields.io/badge/Status-Completed-success.svg)
 
-*Sistema bancario completo desarrollado en Python con interfaz de consola rica y colorida*
+**Sistema bancario educativo desarrollado en Python con interfaz de consola enriquecida gracias a la librería `Rich`.**
 
 </div>
 
@@ -15,65 +15,121 @@
 
 ## 📋 Descripción del Proyecto
 
-El **Sistema Bancario INACAPINO** es una aplicación de consola desarrollada en Python que simula las operaciones básicas de un banco. Incluye gestión de clientes, productos financieros, transferencias, créditos y un sistema completo de avances con tarjeta de crédito.
-
-### ✨ Características Principales
-
-- 🔐 **Validación segura** de RUN chileno con dígito verificador
-- 💰 **Gestión completa** de cuentas y saldos
-- 🏦 **Dos tipos de crédito**: Línea de crédito y tarjeta de crédito
-- 📊 **Interfaz rica** con colores y tablas usando Rich
-- 🔄 **Operaciones bancarias** completas (transferencias, depósitos, retiros)
-- 📈 **Sistema de avances** con cuotas e intereses
-- 📱 **Gestión de contactos** para transferencias seguras
+El **Sistema Bancario INACAPINO** es una aplicación de consola segura y modular que simula las funciones clave de una banca digital. Está diseñado para mostrar buenas prácticas en programación estructurada, manejo de listas, validaciones, control de errores y experiencia de usuario en terminal.
 
 ---
 
-## 🏗️ Arquitectura del Sistema
+## ✨ Características Destacadas
 
-\`\`\`
-📦 banco-inacapino/
-├── 📄 main.py              # Punto de entrada y menú principal
-├── 📄 data.py              # Almacenamiento de datos (listas globales)
-├── 📄 utils.py             # Utilidades y validaciones
-├── 👥 clientes.py          # Gestión de clientes
-├── 📞 contactos.py         # Gestión de contactos
-├── 💸 transferencias.py    # Sistema de transferencias
-├── 💰 movimientos.py       # Depósitos, retiros y pagos
-├── 💳 creditos.py          # Línea de crédito
-├── 🎫 avances.py           # Avances con tarjeta
-├── 💵 pagos_avances.py     # Pago de cuotas
-├── 📊 consultas.py         # Consultas y reportes
-└── 📖 README.md            # Este archivo
-\`\`\`
+- ✅ **Validación robusta de RUN chileno**
+- 👤 **Gestión completa de clientes y cuentas**
+- 🔒 **Seguridad en transferencias solo entre contactos**
+- 💳 **Avances con tarjeta de crédito con interés y cuotas**
+- 💸 **Pagos de cuotas con desglose de capital abonado y adeudado**
+- 📱 **Interfaz moderna y colorida con [Rich](https://github.com/Textualize/rich)**
+- ⚠️ **Manejo de excepciones, saldos insuficientes y límites de crédito**
 
-### 🔄 Flujo de Datos
+---
 
-\`\`\`mermaid
+## 🏠 Estructura del Proyecto
+
+```bash
+📆 banco-inacapino/
+🔝 main.py               # Menú principal e interacción del usuario
+🔝 data.py               # Listas globales (simulación de base de datos)
+🔝 utils.py              # Validaciones, entradas y limpieza de pantalla
+🔝 clientes.py           # Registro y listado de clientes
+🔝 contactos.py          # Registro y listado de contactos
+🔝 transferencias.py     # Transferencias seguras entre cuentas
+🔝 avances.py            # Solicitud de avances con tarjeta de crédito
+🔝 pagos_avances.py      # Pago de cuotas de avances
+🔝 README.md             # Documentación del proyecto
+```
+
+---
+
+## ↺ Flujo General del Sistema
+
+```mermaid
 graph TD
-    A[main.py] --> B[Menú Principal]
-    B --> C[Gestión Clientes]
-    B --> D[Operaciones Bancarias]
-    B --> E[Productos de Crédito]
-    B --> F[Consultas]
-    
-    C --> G[clientes.py]
-    C --> H[contactos.py]
-    
-    D --> I[transferencias.py]
-    D --> J[movimientos.py]
-    
-    E --> K[creditos.py]
-    E --> L[avances.py]
-    E --> M[pagos_avances.py]
-    
-    F --> N[consultas.py]
-    
-    G --> O[data.py]
-    H --> O
-    I --> O
-    J --> O
-    K --> O
-    L --> O
-    M --> O
-    N --> O
+    main[main.py] --> menu[Menú Principal]
+    menu --> clientes[clientes.py]
+    menu --> contactos[contactos.py]
+    menu --> transferencias[transferencias.py]
+    menu --> avances[avances.py]
+    menu --> pagos[pagos_avances.py]
+    clientes --> data[data.py]
+    contactos --> data
+    transferencias --> data
+    avances --> data
+    pagos --> data
+```
+
+---
+
+## 📦 Instalación y Uso
+
+### 📅 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/tu-usuario/banco-inacapino.git
+cd banco-inacapino
+```
+
+### 📦 2. Instalar dependencias
+
+```bash
+# Instalar la única librería externa necesaria
+pip install rich
+```
+
+### 🏁 3. Ejecutar el sistema
+
+```bash
+python main.py
+```
+
+---
+
+## 🚀 Guía Rápida de Uso
+
+1. 📟 **Registrar Cliente**  
+   Desde el menú principal, selecciona la opción `[1]` e ingresa:
+   - Nombre
+   - Apellido
+   - RUN chileno válido (ej: `12.345.678-9`)
+   - Monto de depósito inicial
+
+2. 🢑 **Agregar Contactos**  
+   Opción `[3]` para registrar contactos a los que podrás transferir dinero.
+
+3. 💸 **Solicitar Avance**  
+   Usa la opción `[6]` para solicitar un avance con tarjeta en cuotas.
+
+4. 📆 **Pagar Cuotas**  
+   Selecciona `[7]` para pagar las cuotas pendientes del avance con desglose de capital.
+
+5. ⟳ **Transferir Dinero**  
+   Solo a contactos registrados (opción `[5]`).
+
+---
+
+## ✅ Requisitos
+
+- Python 3.8 o superior
+- Sistema operativo con consola compatible
+- Conexión a Internet (solo para clonar el repo o instalar `rich`)
+
+---
+
+## 📜 Licencia
+
+Distribuido bajo la Licencia MIT. Ver [`LICENSE`](LICENSE) para más información.
+
+---
+
+## 🤝 Atribuciones
+
+Proyecto desarrollado para fines académicos bajo el marco de la asignatura *Introducción a la Programación Segura - INACAP*.
+
+---
